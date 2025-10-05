@@ -1,0 +1,28 @@
+function doGet(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  if (!e || !e.parameter) {
+    return ContentService.createTextOutput("Lỗi: Không có dữ liệu").setMimeType(ContentService.MimeType.TEXT);
+  }
+  var timestamp = new Date(); 
+  var mau_hong = e.parameter.mau_hong ;
+  var mau_cam = e.parameter.mau_cam ;
+  var mau_tim = e.parameter.mau_tim ;
+
+  // Lấy dữ liệu hiện tại trên Sheet
+  var lastmau_hong = sheet.getRange(3, 2).getValue(); 
+  var lastmau_cam = sheet.getRange(3, 3).getValue(); 
+  var lastmau_tim = sheet.getRange(3, 4).getValue(); 
+  if (mau_hong !== lastmau_hong) {
+    sheet.getRange(2, 2).setValue(timestamp); 
+  }
+  if (mau_cam !== lastmau_cam) {
+    sheet.getRange(2, 3).setValue(timestamp); 
+  }
+  if (mau_tim !== lastmau_tim) {
+    sheet.getRange(2, 4).setValue(timestamp); 
+  }
+  sheet.getRange(3, 2).setValue(mau_hong);
+  sheet.getRange(3, 3).setValue(mau_cam);
+  sheet.getRange(3, 4).setValue(mau_tim);
+  return ContentService.createTextOutput("Dữ liệu đã cập nhật").setMimeType(ContentService.MimeType.TEXT);
+}
